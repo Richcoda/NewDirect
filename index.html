@@ -18,7 +18,7 @@
         }
 
         // Fetch URLs from the serverless function
-        fetch('https://newdirect-o44tmvasj-gainsonlys-projects.vercel.app/api/redirect?urls=encodedUrl1,encodedUrl2')
+        fetch('http://localhost:8010/proxy')
             .then(response => {
                 if (!response.ok) {
                 throw new Error('Network response was not ok');
