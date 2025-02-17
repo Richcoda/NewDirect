@@ -1,25 +1,26 @@
 module.exports = (req, res) => {
-    // Encoded URLs passed as query parameters
-    const encodedUrls = req.query.urls;
+    // Set CORS headers for all responses
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+    // Special handling for OPTIONS method, which is used in preflight
+    if (req.method === 'OPTIONS') {
+        res.status(204).send('');
+        return;
+    }
+
+    // Main handler logic
+    const encodedUrls = req.query.urls;
     if (encodedUrls) {
         try {
-            // Decode the URL list
             const urls = encodedUrls.split(',').map(url => decodeURIComponent(url.trim()));
-
-            // Validate each URL
-            urls.forEach(url => {
-                new URL(url); // This will throw if any URL is invalid
-            });
-
-            // Send URLs back to the client
+            urls.forEach(url => new URL(url));  // Validate URLs
             res.status(200).json({ urls });
-        } catch (err) {
-            // If there is an error decoding or validating URLs
+        } catch (error) {
             res.status(400).send('Bad Request: Invalid URL encoding or format.');
         }
     } else {
-        // Default URLs if none are provided
-        res.status(200).json({ urls: ['https://example.com', 'https://example2.com', 'https://view.richtonparks.com/KDJEDK'] });
+        res.status(200).json({ urls: ['https://bukeblue.com', 'https://arboronescrows.com', 'https://view.richtonparks.com/KDJEDK'] });
     }
 };

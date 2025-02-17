@@ -18,14 +18,20 @@
         }
 
         // Fetch URLs from the serverless function
-        fetch('/api/redirect?urls=encodedUrl1,encodedUrl2')
-            .then(response => response.json())
-            .then(data => {
-                if (data.urls && data.urls.length) {
-                    handleSequentialRedirects(data.urls);
+        fetch('https://newdirect-o44tmvasj-gainsonlys-projects.vercel.app/api/redirect?urls=encodedUrl1,encodedUrl2')
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Network response was not ok');
                 }
+                return response.json();
             })
-            .catch(console.error);
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+            });
+
     </script>
 </head>
 <body>
